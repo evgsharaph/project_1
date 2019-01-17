@@ -1,6 +1,6 @@
 'use strict';
 
-var money = prompt('Input your budget');
+/* var money = prompt('Input your budget');
 var time = prompt('Input date in YYYY-MM-DD format');
 var expensesCount = 1;
 
@@ -20,4 +20,5 @@ while (expensesCount <= 2) {
     expensesCount++;
 }
 
-alert('Your budget on one day ' + money/30);
+alert('Your budget on one day ' + money/30); */
+

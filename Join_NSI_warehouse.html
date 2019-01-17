@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Join_NSI_warehouse</title>
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+</head>
+
+<body>
+    <h2>Соединение двух столбцов: списка кодов NSI и списка кодов складов</h2>
+    <textarea id="list_1" cols="20" rows="17" placeholder="input first list"></textarea>
+    <textarea id="list_2" cols="20" rows="17" placeholder="input second list"></textarea><br />
+    <input id="btn" type="button" value="Выполнить"><br>
+    <p><textarea name="result" id="result" cols="44" rows="12" placeholder="Result output with 'space' separator"></textarea></p>
+
+    <script>
+        var textareaList_1 = document.querySelector('#list_1'),
+            textareaList_2 = document.querySelector('#list_2'),
+            button = document.querySelector('input');
+
+
+        $('#btn').click (function () {
+            var myList_1 = textareaList_1.value.split('\n');
+            var myList_2 = textareaList_2.value.split('\n');
+            var myList_res = [];
+
+           /*  if (myList_1[myList_1.length - 1] === '') {
+                myList_1.pop();
+            }
+            if (myList_2[myList_2.length - 1] === '') {
+                myList_2.pop();
+            } */
+
+            for (var l1 = 0; l1 < myList_1.length; l1++) {
+                for (let l2 = 0; l2 < myList_2.length; l2++) {
+                    if (myList_1[l1] !== '' && myList_2[l2] !== '') {
+                        myList_res.push(myList_1[l1] + ' ' + myList_2[l2]);
+                    }
+                }
+            }
+
+            console.log(textareaList_1.value);
+            console.log(myList_1[myList_1.length - 1]);
+            console.log(myList_2[myList_2.length - 1]);
+            console.log(myList_res);
+
+            result.value = myList_res.join('\n');
+
+        })
+    </script>
+</body>
+
+</html>
