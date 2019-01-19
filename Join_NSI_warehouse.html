@@ -4,49 +4,98 @@
 <head>
     <title>Join_NSI_warehouse</title>
     <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <style>
+        h2 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-style: italic;
+        }
+
+        textarea {
+            background:#FFFFD6;
+            margin: 0px 0px 0px 2px;
+            border: 1.5px solid gray;
+            border-radius: 4px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-style: italic;
+        }
+
+        .btn {
+            background: rgb(252, 252, 0);
+            border: 1.5px solid gray;
+            border-radius: 4px;
+            width: 320px;
+            height: auto;
+            margin: 0px 0px 3px 2px;
+            padding: 3px 5px 3px 5px;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-style: italic;
+            color: rgb(78, 78, 78);
+        }
+
+        #btn_reset {
+            background: rgb(214, 211, 211);
+        }
+
+        .btn:hover {
+            transition: 0.5s;
+            border: 1.5px solid black;
+            cursor: pointer;
+            color: black;
+        }
+
+        #result {
+            margin: 5px 0px 0px 2px;
+        }
+    </style>
 </head>
 
 <body>
-    <h2>Соединение двух столбцов: списка кодов NSI и списка кодов складов</h2>
-    <textarea id="list_1" cols="20" rows="17" placeholder="input first list"></textarea>
-    <textarea id="list_2" cols="20" rows="17" placeholder="input second list"></textarea><br />
-    <input id="btn" type="button" value="Выполнить"><br>
-    <p><textarea name="result" id="result" cols="44" rows="12" placeholder="Result output with 'space' separator"></textarea></p>
+    <h2>Соединение двух списков каждый к каждому: кодов NSI и кодов складов</h2>
+    <textarea id="list_1" cols="20" rows="17" placeholder="Вставьте первый список"></textarea>
+    <textarea id="list_2" cols="20" rows="17" placeholder="Вставьте второй список"></textarea>
+    <div class="btn" id="btn_input">Выполнить сопоставление</div>
+    <div class="btn" id="btn_reset">Очистить</div>
+    <textarea name="result" id="result" cols="44" rows="25" placeholder='Результат будет выведен здесь через "пробел"'></textarea>
+    <!-- <input id="btn_output" type="button" value="Выгрузить результат в файл"> -->
 
     <script>
-        var textareaList_1 = document.querySelector('#list_1'),
-            textareaList_2 = document.querySelector('#list_2'),
-            button = document.querySelector('input');
-
-
-        $('#btn').click (function () {
-            var myList_1 = textareaList_1.value.split('\n');
-            var myList_2 = textareaList_2.value.split('\n');
+        $('#btn_input').click(function () {
+            var myList_1 = $('#list_1').val().split('\n');
+            var myList_2 = $('#list_2').val().split('\n');
             var myList_res = [];
+            var sprtr = '<--->'; //указать разделитель для результирующего массива 
 
-           /*  if (myList_1[myList_1.length - 1] === '') {
-                myList_1.pop();
-            }
-            if (myList_2[myList_2.length - 1] === '') {
-                myList_2.pop();
-            } */
 
-            for (var l1 = 0; l1 < myList_1.length; l1++) {
-                for (let l2 = 0; l2 < myList_2.length; l2++) {
-                    if (myList_1[l1] !== '' && myList_2[l2] !== '') {
-                        myList_res.push(myList_1[l1] + ' ' + myList_2[l2]);
+            for (var l_1 = 0; l_1 < myList_1.length; l_1++) {
+                for (var l_2 = 0; l_2 < myList_2.length; l_2++) {
+                    var double = false;
+                    for (var l_res = 0; l_res < myList_res.length; l_res++) {  //проверяем результирующий массив на повторяющиеся значения
+                        if (myList_res[l_res] === myList_1[l_1] + sprtr + myList_2[l_2]) {
+                            double = true;
+                        };
                     }
+                    if (myList_1[l_1] !== '' && myList_2[l_2] !== '' && double === false) {  //проверяем исходные массивы на наличие пустых элементов
+                        myList_res.push(myList_1[l_1] + sprtr + myList_2[l_2]);
+                    };
+                    /* console.log(double);
+                    console.log(myList_res.length) */
                 }
             }
 
-            console.log(textareaList_1.value);
-            console.log(myList_1[myList_1.length - 1]);
-            console.log(myList_2[myList_2.length - 1]);
-            console.log(myList_res);
+            /* console.log(myList_1);
+            console.log(myList_2);
+            console.log(myList_res); */
+
 
             result.value = myList_res.join('\n');
-
-        })
+        });
+        $('#btn_reset').click(function () {
+            result.value = '';
+            list_1.value = '';
+            list_2.value = '';
+        });
     </script>
 </body>
 
